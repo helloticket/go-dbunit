@@ -1,6 +1,9 @@
 package dbunit
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Command struct {
 	record Record
@@ -25,7 +28,16 @@ func (r *Record) ColumnsByValues() []string {
 	cols := []string{}
 
 	for _, c := range r.columns {
-		cols = append(cols, fmt.Sprintf("%s = :%s", c, c))
+		switch target := r.Values()[c].(type) {
+		case string:
+			if strings.HasPrefix(target, "RAW=") {
+				cols = append(cols, strings.TrimPrefix(target, "RAW="))
+			} else {
+				cols = append(cols, fmt.Sprintf("%s = :%s", c, c))
+			}
+		default:
+			cols = append(cols, fmt.Sprintf("%s = :%s", c, c))
+		}
 	}
 
 	return cols
@@ -35,7 +47,16 @@ func (r *Record) ColumnsByAlias() []string {
 	cols := []string{}
 
 	for _, c := range r.columns {
-		cols = append(cols, fmt.Sprintf(":%s", c))
+		switch target := r.Values()[c].(type) {
+		case string:
+			if strings.HasPrefix(target, "RAW=") {
+				cols = append(cols, strings.TrimPrefix(target, "RAW="))
+			} else {
+				cols = append(cols, fmt.Sprintf(":%s", c))
+			}
+		default:
+			cols = append(cols, fmt.Sprintf(":%s", c))
+		}
 	}
 
 	return cols

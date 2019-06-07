@@ -116,3 +116,18 @@ func TestPostgresFixtureYmlWithFilter(t *testing.T) {
 
 	assertCount(t, 2, "select count(*) FROM comments")
 }
+
+func TestPostgresFixtureYmlWithFunc(t *testing.T) {
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
+	dataSet := NewFlatYmlDataSet("testdata/fixtures")
+
+	DeleteAll(dbFactory, dataSet).ExecuteWith("posts_tags", "posts_and_tags.yml")
+	DeleteAll(dbFactory, dataSet).Execute("comments.yml")
+	DeleteAll(dbFactory, dataSet).Execute("posts.yml")
+	DeleteAll(dbFactory, dataSet).Execute("users.yml")
+	DeleteAndInsert(dbFactory, dataSet).ExecuteWith("tags", "tags_func.yml")
+
+	assertCount(t, 2, "select count(*) FROM tags")
+}

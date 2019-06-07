@@ -12,24 +12,10 @@ type PostgresDatabaseFactory struct {
 }
 
 func (p *PostgresDatabaseFactory) Exec(cmds []Command) {
-	tx, err := p.db.Beginx()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var checkRollback error
-
 	for _, c := range cmds {
-		if _, err := tx.NamedExec(c.sql, c.record.Values()); err != nil {
-			checkRollback = err
-			log.Println("file:", c.record.fileName, " error:", err, " sql:", c.sql, " values:", c.record.values)
+		if _, err := p.db.NamedExec(c.sql, c.record.Values()); err != nil {
+			log.Fatal("file:", c.record.fileName, " error:", err, " sql:", c.sql, " values:", c.record.values)
 		}
-	}
-
-	if checkRollback != nil {
-		tx.Rollback()
-	} else {
-		tx.Commit()
 	}
 }
 

@@ -47,6 +47,7 @@ func (d *DeleteOperation) ExecuteWithFilter(tableName string, fixtureName string
 				tableName,
 				strings.Join(r.ColumnsByValues(), " AND "),
 			)
+
 			commands = append(commands, Command{record: r, sql: sql})
 		}
 	}

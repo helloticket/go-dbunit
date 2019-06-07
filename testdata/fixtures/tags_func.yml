@@ -1,0 +1,11 @@
+one:
+  id: 1
+  name: Go
+  created_at: RAW=CURRENT_TIMESTAMP
+  updated_at: RAW=CURRENT_TIMESTAMP
+
+two:
+  id: 2
+  name: Go
+  created_at: RAW=CURRENT_TIMESTAMP
+  updated_at: RAW=CURRENT_TIMESTAMP

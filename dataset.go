@@ -58,6 +58,7 @@ func (f *FlatYmlDataSet) Load(fixtureName string) ([]Record, error) {
 func (f *FlatYmlDataSet) mapper(file string, raw map[interface{}]interface{}) Record {
 	columns := []string{}
 	values := map[string]interface{}{}
+
 	for k, v := range raw {
 		columns = append(columns, fmt.Sprintf("%s", k))
 
@@ -75,4 +76,8 @@ func (f *FlatYmlDataSet) mapper(file string, raw map[interface{}]interface{}) Re
 		columns:  columns,
 		values:   values,
 	}
+}
+
+func (f *FlatYmlDataSet) eval(source interface{}) interface{} {
+	return source
 }
