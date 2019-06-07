@@ -12,26 +12,26 @@ import (
 
 var globalConnect *sqlx.DB
 var schemas = map[string]string{"postgres": "testdata/schemas/postgresql.sql"}
+var globalDataSource = "user=dbunit password=dbunit00 dbname=dbunit host=localhost port=5454 sslmode=disable"
+var globalDriver = "postgres"
 
 func TestMain(m *testing.M) {
-	ds := "user=dbunit password=dbunit00 dbname=dbunit host=localhost port=5454 sslmode=disable"
 	if os.Getenv("DBUNIT_DS") != "" {
-		ds = os.Getenv("DBUNIT_DS")
+		globalDataSource = os.Getenv("DBUNIT_DS")
 	}
 
-	driver := "postgres"
 	if os.Getenv("DBUNIT_DRIVER") != "" {
-		ds = os.Getenv("DBUNIT_DRIVER")
+		globalDataSource = os.Getenv("DBUNIT_DRIVER")
 	}
 
-	db, err := sqlx.Connect(driver, ds)
+	db, err := sqlx.Connect(globalDriver, globalDataSource)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v\n", err)
 	} else {
 		globalConnect = db
 	}
 
-	content, err := ioutil.ReadFile(schemas[driver])
+	content, err := ioutil.ReadFile(schemas[globalDriver])
 	if err != nil {
 		log.Fatal(err)
 	}

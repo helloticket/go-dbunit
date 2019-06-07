@@ -1,6 +1,7 @@
 package dbunit
 
 import (
+	"database/sql"
 	"log"
 
 	"github.com/jmoiron/sqlx"
@@ -32,4 +33,12 @@ func (p *PostgresDatabaseFactory) Exec(cmds []Command) {
 	} else {
 		tx.Commit()
 	}
+}
+
+func (p *PostgresDatabaseFactory) Close() error {
+	return p.db.Close()
+}
+
+func (p *PostgresDatabaseFactory) DB() *sql.DB {
+	return p.db.DB
 }

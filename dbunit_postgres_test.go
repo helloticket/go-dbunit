@@ -5,7 +5,9 @@ import (
 )
 
 func TestPostgresFixtureYmlToDeleteOperation(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalConnect)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
 
 	globalConnect.MustExec("insert into peoples values (1, 'John', '2a20b784-fa0e-452e-b36e-d582f2fdbf99')")
@@ -18,7 +20,9 @@ func TestPostgresFixtureYmlToDeleteOperation(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToDeleteAllOperationByPeople(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalConnect)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
 
 	globalConnect.MustExec("insert into peoples values (1, 'John', '2a20b784-fa0e-452e-b36e-d582f2fdbf99')")
@@ -32,7 +36,9 @@ func TestPostgresFixtureYmlToDeleteAllOperationByPeople(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToDeleteOperationByTags(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalConnect)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
 
 	globalConnect.MustExec("insert into tags (id, name, created_at, updated_at)  values (1, 'Go', '2016-01-01 12:30:12', '2016-01-01 12:30:12')")
@@ -45,7 +51,9 @@ func TestPostgresFixtureYmlToDeleteOperationByTags(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToDeleteOperationByUsers(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalConnect)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
 
 	DeleteAll(dbFactory, dataSet).ExecuteWith("users", "users.yml")
@@ -54,7 +62,9 @@ func TestPostgresFixtureYmlToDeleteOperationByUsers(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToInsertOperationByUsers(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalConnect)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
 
 	Insert(dbFactory, dataSet).ExecuteWith("users", "users.yml")
@@ -63,7 +73,9 @@ func TestPostgresFixtureYmlToInsertOperationByUsers(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToComposeOperationByUsers(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalConnect)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
 
 	globalConnect.MustExec("insert into tags (id, name, created_at, updated_at)  values (1, 'Go', '2016-01-01 12:30:12', '2016-01-01 12:30:12')")
@@ -74,7 +86,9 @@ func TestPostgresFixtureYmlToComposeOperationByUsers(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToSuiteOperations(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalConnect)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
 
 	DeleteAndInsert(dbFactory, dataSet).Execute("posts.yml")
@@ -91,7 +105,9 @@ func TestPostgresFixtureYmlToSuiteOperations(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlWithFilter(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalConnect)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
 
 	DeleteAndInsert(dbFactory, dataSet).ExecuteWithFilter("comments", "comments.yml", func(record Record) bool {

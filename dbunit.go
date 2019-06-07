@@ -1,9 +1,18 @@
 package dbunit
 
-import "github.com/jmoiron/sqlx"
+import (
+	"database/sql"
+	"log"
+
+	"github.com/jmoiron/sqlx"
+)
 
 type DatabaseFactory interface {
 	Exec(cmds []Command)
+
+	Close() error
+
+	DB() *sql.DB
 }
 
 type DatabaseConfig interface {
@@ -13,8 +22,20 @@ type DataSet interface {
 	Load(fixtureName string) ([]Record, error)
 }
 
-func NewPostgresDatabaseFactory(db *sqlx.DB) DatabaseFactory {
-	return &PostgresDatabaseFactory{db: db}
+func NewPostgresDatabaseFactory(driver, ds string) DatabaseFactory {
+	var conn *sqlx.DB
+
+	if driver != "" && ds != "" {
+		db, err := sqlx.Connect(driver, ds)
+		if err != nil {
+			log.Fatalf("Failed to connect to database: %v\n", err)
+			return nil
+		} else {
+			conn = db
+		}
+	}
+
+	return &PostgresDatabaseFactory{db: conn}
 }
 
 func NewFlatYmlDataSet(dir string) DataSet {

@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreateDataBaseConnectionByPostgres(t *testing.T) {
-	factory := NewPostgresDatabaseFactory(nil)
+	factory := NewPostgresDatabaseFactory("", "")
 
 	assert.NotNil(t, factory)
 }
