@@ -1,0 +1,17 @@
+one:
+  id: FUNC=NextValue(1)
+  name: Go1
+  created_at: RAW=CURRENT_TIMESTAMP
+  updated_at: RAW=CURRENT_TIMESTAMP
+
+two:
+  id: FUNC=NextValue(2)
+  name: Go2
+  created_at: RAW=CURRENT_TIMESTAMP
+  updated_at: RAW=CURRENT_TIMESTAMP
+
+three:
+  id: FUNC=NextValue(3)
+  name: Go3
+  created_at: RAW=CURRENT_TIMESTAMP
+  updated_at: RAW=CURRENT_TIMESTAMP

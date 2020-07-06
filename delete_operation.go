@@ -48,7 +48,7 @@ func (d *DeleteOperation) ExecuteWithFilter(tableName string, fixtureName string
 				strings.Join(r.ColumnsByValues(), " AND "),
 			)
 
-			commands = append(commands, Command{record: r, sql: sql})
+			commands = append(commands, Command{record: r, sql: sql, tableName: tableName})
 		}
 	}
 
@@ -68,7 +68,7 @@ func (d *DeleteAllOperation) ExecuteWithFilter(tableName string, fixtureName str
 	for _, r := range records {
 		if !filter(r) {
 			sql := fmt.Sprintf("DELETE FROM %s ", tableName)
-			commands = append(commands, Command{record: r, sql: sql})
+			commands = append(commands, Command{record: r, sql: sql, tableName: tableName})
 		}
 	}
 

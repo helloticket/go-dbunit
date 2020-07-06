@@ -6,8 +6,9 @@ import (
 )
 
 type Command struct {
-	record Record
-	sql    string
+	tableName string
+	record    Record
+	sql       string
 }
 
 type Record struct {

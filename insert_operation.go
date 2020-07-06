@@ -36,7 +36,7 @@ func (d *InsertOperation) ExecuteWithFilter(tableName string, fixtureName string
 				strings.Join(r.ColumnsByAlias(), ","),
 			)
 
-			commands = append(commands, Command{record: r, sql: sql})
+			commands = append(commands, Command{record: r, sql: sql, tableName: tableName})
 		}
 	}
 

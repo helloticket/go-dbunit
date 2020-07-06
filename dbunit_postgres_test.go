@@ -131,3 +131,14 @@ func TestPostgresFixtureYmlWithFunc(t *testing.T) {
 
 	assertCount(t, 2, "select count(*) FROM tags")
 }
+
+func TestPostgresFixtureYmlIncrementSequence(t *testing.T) {
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	defer dbFactory.Close()
+
+	dataSet := NewFlatYmlDataSet("testdata/fixtures")
+
+	DeleteAndInsert(dbFactory, dataSet).ExecuteWith("tags", "tags_custom_func.yml")
+
+	assertCount(t, 3, "select count(*) FROM tags")
+}
