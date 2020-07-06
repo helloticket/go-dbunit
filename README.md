@@ -5,7 +5,7 @@ go-dbunit is a extension targeted at database-driven projects inspired by dbunit
 ## Using
 
 ```bash
-import "github.com/codenplaycorp/go-dbunit"
+import "github.com/helloticket/go-dbunit"
 
 db, err := sql.Open("postgres", ds)
 if err != nil {
