@@ -5,7 +5,7 @@ import (
 )
 
 func TestPostgresFixtureYmlToDeleteOperation(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
@@ -20,7 +20,7 @@ func TestPostgresFixtureYmlToDeleteOperation(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToDeleteAllOperationByPeople(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
@@ -36,7 +36,7 @@ func TestPostgresFixtureYmlToDeleteAllOperationByPeople(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToDeleteOperationByTags(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
@@ -51,7 +51,7 @@ func TestPostgresFixtureYmlToDeleteOperationByTags(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToDeleteOperationByUsers(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
@@ -62,7 +62,7 @@ func TestPostgresFixtureYmlToDeleteOperationByUsers(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToInsertOperationByUsers(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
@@ -73,7 +73,7 @@ func TestPostgresFixtureYmlToInsertOperationByUsers(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToComposeOperationByUsers(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
@@ -86,7 +86,7 @@ func TestPostgresFixtureYmlToComposeOperationByUsers(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlToSuiteOperations(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
@@ -105,7 +105,7 @@ func TestPostgresFixtureYmlToSuiteOperations(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlWithFilter(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
@@ -118,7 +118,7 @@ func TestPostgresFixtureYmlWithFilter(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlWithFunc(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")
@@ -133,7 +133,7 @@ func TestPostgresFixtureYmlWithFunc(t *testing.T) {
 }
 
 func TestPostgresFixtureYmlIncrementSequence(t *testing.T) {
-	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource)
+	dbFactory := NewPostgresDatabaseFactory(globalDriver, globalDataSource, DebugSQL())
 	defer dbFactory.Close()
 
 	dataSet := NewFlatYmlDataSet("testdata/fixtures")

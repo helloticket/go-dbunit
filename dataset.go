@@ -17,12 +17,12 @@ func (f *FlatYmlDataSet) Load(fixtureName string) ([]Record, error) {
 
 	content, err := ioutil.ReadFile(file)
 	if err != nil {
-		return []Record{Record{}}, err
+		return []Record{}, err
 	}
 
 	var raw interface{}
 	if err := yaml.Unmarshal(content, &raw); err != nil {
-		return []Record{Record{}}, err
+		return []Record{}, err
 	}
 
 	records := []Record{}
@@ -32,7 +32,7 @@ func (f *FlatYmlDataSet) Load(fixtureName string) ([]Record, error) {
 		for _, r := range rawRecords {
 			recordMap, ok := r.(map[interface{}]interface{})
 			if !ok {
-				return []Record{}, errors.New("Wrong cast []interface{}")
+				return []Record{}, errors.New("wrong cast []interface{}")
 			}
 
 			records = append(records, f.mapper(file, recordMap))
@@ -42,7 +42,7 @@ func (f *FlatYmlDataSet) Load(fixtureName string) ([]Record, error) {
 		for _, record := range rawRecords {
 			recordMap, ok := record.(map[interface{}]interface{})
 			if !ok {
-				return []Record{}, errors.New("Wrong cast map[interface{}]interface{}")
+				return []Record{}, errors.New("wrong cast map[interface{}]interface{}")
 			}
 
 			records = append(records, f.mapper(file, recordMap))
@@ -76,8 +76,4 @@ func (f *FlatYmlDataSet) mapper(file string, raw map[interface{}]interface{}) Re
 		columns:  columns,
 		values:   values,
 	}
-}
-
-func (f *FlatYmlDataSet) eval(source interface{}) interface{} {
-	return source
 }

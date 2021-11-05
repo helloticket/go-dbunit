@@ -11,7 +11,8 @@ import (
 )
 
 type PostgresDatabaseFactory struct {
-	db *sqlx.DB
+	db   *sqlx.DB
+	opts options
 }
 
 type dbPredicate func(tableName string, column string, db *PostgresDatabaseFactory) int64
@@ -40,6 +41,26 @@ func (p *PostgresDatabaseFactory) Exec(cmds []Command) {
 			} else {
 				values[column] = val
 			}
+		}
+
+		if p.opts.sql {
+			fmt.Println("[DBUnit] Debug SQL")
+			fmt.Println("---")
+			fmt.Println(c.sql)
+
+			if len(values) != 0 {
+				args := []string{}
+
+				for k, v := range values {
+					value := strings.ReplaceAll(fmt.Sprintf("%v", v), "RAW=", "")
+					args = append(args, fmt.Sprintf("%v=%v", k, value))
+				}
+
+				fmt.Println(strings.Join(args, ", "))
+			}
+
+			fmt.Println("---")
+			fmt.Println()
 		}
 
 		if _, err := p.db.NamedExec(c.sql, values); err != nil {

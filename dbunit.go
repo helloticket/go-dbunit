@@ -15,14 +15,11 @@ type DatabaseFactory interface {
 	DB() *sql.DB
 }
 
-type DatabaseConfig interface {
-}
-
 type DataSet interface {
 	Load(fixtureName string) ([]Record, error)
 }
 
-func NewPostgresDatabaseFactory(driver, ds string) DatabaseFactory {
+func NewPostgresDatabaseFactory(driver, ds string, opts ...Options) DatabaseFactory {
 	var conn *sqlx.DB
 
 	if driver != "" && ds != "" {
@@ -35,7 +32,12 @@ func NewPostgresDatabaseFactory(driver, ds string) DatabaseFactory {
 		}
 	}
 
-	return &PostgresDatabaseFactory{db: conn}
+	cfg := options{}
+	for _, apply := range opts {
+		apply(&cfg)
+	}
+
+	return &PostgresDatabaseFactory{db: conn, opts: cfg}
 }
 
 func NewFlatYmlDataSet(dir string) DataSet {
